@@ -1,7 +1,4 @@
 # Digital-Circuit-Design
-Verilog-based RTL designs for real-world digital systems: UART transceiver, async FIFO with CDC, and more. Verified in simulation with 100% data integrity. Ready for FPGA/ASIC implementation.
-
-# Digital Circuit Design Portfolio
 
 A collection of **industry-relevant digital circuit designs** implemented in **Verilog HDL**, targeting **FPGA and ASIC applications**. Each project includes **parameterized modules**, **robust testbenches**, and **simulation waveforms** to demonstrate correctness under real-world constraints.
 
