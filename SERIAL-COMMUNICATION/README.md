@@ -7,7 +7,6 @@
 ## Features
 
 - **8-bit Transmitter + Receiver**  
-  - 8-N-1 format (8 data bits, no parity, 1 stop bit)
 
 - **Parameterized Baud Rate Generator**  
   - Configurable clock divider  
