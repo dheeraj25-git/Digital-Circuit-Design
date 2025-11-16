@@ -118,4 +118,91 @@ module basic_vending(
     end
 
 endmodule
+
+// =============================================================================
+// Testbench: tb_basic_vending
+// Description:
+//   Verifies basic_vending module with two test cases:
+//     1. Two nickels + dime → dispense + 5¢ change
+//     2. Dime + nickel → dispense + 0¢ change
+//   Uses $monitor for real-time signal tracing.
+// =============================================================================
+module tb_basic_vending;
+
+    // Inputs
+    reg clk, reset, nickel, dime, dispense_in;
+
+    // Outputs
+    wire dispense_out, done;
+    wire [3:0] change_out;
+
+    // Instantiate the Unit Under Test (UUT)
+    basic_vending uut (
+        .clk(clk),
+        .reset(reset),
+        .nickel(nickel),
+        .dime(dime),
+        .dispense_in(dispense_in),
+        .dispense_out(dispense_out),
+        .done(done),
+        .change_out(change_out)
+    );
+
+    // =========================================================================
+    // Clock Generation: 100 MHz (10 ns period)
+    // =========================================================================
+    initial begin
+        clk = 0;
+        forever #5 clk = ~clk;
+    end
+
+    // =========================================================================
+    // Test Sequence
+    // =========================================================================
+    initial begin
+        $display("Starting Vending Machine Test...");
+
+        // Initialize inputs
+        reset = 1; nickel = 0; dime = 0; dispense_in = 0;
+        #15;
+        reset = 0;
+        #10;
+
+        // =============================
+        // Test 1: 5 + 5 + 10 = 20¢ → 5¢ change
+        // =============================
+        $display("Test 1: Two nickels + dime");
+        nickel = 1; #10; nickel = 0; // +5¢
+        nickel = 1; #10; nickel = 0; // +5¢ (total 10¢)
+        dime   = 1; #10; dime   = 0; // +10¢ (total 20¢)
+        dispense_in = 1; #10; dispense_in = 0;
+        #10; // Wait for VEND → DONE
+        $display("Result: Money=%d, Dispense=%b, Change=%d, Done=%b",
+                 uut.money, dispense_out, change_out, done);
+
+        // =============================
+        // Test 2: 10 + 5 = 15¢ → 0¢ change
+        // =============================
+        #10; // Return to WAIT
+        $display("Test 2: Dime + nickel");
+        dime   = 1; #10; dime   = 0; // +10¢
+        nickel = 1; #10; nickel = 0; // +5¢ (total 15¢)
+        dispense_in = 1; #10; dispense_in = 0;
+        #10;
+        $display("Result: Money=%d, Dispense=%b, Change=%d, Done=%b",
+                 uut.money, dispense_out, change_out, done);
+
+        $display("Test completed!");
+        $finish;
+    end
+
+    // =========================================================================
+    // Real-time Monitoring
+    // =========================================================================
+    initial begin
+        $monitor("t=%0t | state=%b | money=%d | nickel=%b | dime=%b | dispense_in=%b | change=%d | done=%b",
+                 $time, uut.state, uut.money, nickel, dime, dispense_in, change_out, done);
+    end
+
+endmodule
 ```
