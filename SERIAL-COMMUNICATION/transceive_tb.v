@@ -84,7 +84,8 @@ module transceive_tb;
         begin
             $display("TEST FAILED: received %h", data_out);
         end
-    
+        
+    #90;
     $finish;
         end  
         
