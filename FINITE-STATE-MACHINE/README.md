@@ -12,7 +12,7 @@
 - **Zero false positives**, **100% detection accuracy**  
 - **Applications**: Digital communication, pattern matching, CRC
 
-- ### 3. **GCD Calculator (Euclidean Subtraction)**
+### 3. **GCD Calculator (Euclidean Subtraction)**
 - **FSM-based** GCD using **repeated subtraction**  
 - Accepts **4-bit inputs (0–15)**  
 - Verified: **GCD(12, 8) = 4** in 8 cycles  
